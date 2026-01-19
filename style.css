@@ -21,6 +21,11 @@ body {
 
 .stats-container {
     display: flex;
+    cursor: pointer;
+    box-shadow: lightblue;
+    display: flex;
+    align-items: flex-start;
+    
 }
 
 .stats-card {

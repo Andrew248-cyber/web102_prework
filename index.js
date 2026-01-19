@@ -27,7 +27,12 @@ const gamesContainer = document.getElementById("games-container");
 
 // create a function that adds all data from the games array to the page
 function addGamesToPage(games) {
+    for (let x = 0; i < games; x++) {
+         const games = `<div class = "gamecard"> 
+         </div>`;
+         const apps = `The game's image looks like ${ get  }; This is the ${ pledged } amount and the goal is ${ description }`;
 
+    }}
     // loop over each item in the data
 
 
@@ -45,7 +50,7 @@ function addGamesToPage(games) {
 
         // append the game to the games-container
 
-}
+
 
 // call the function we just defined using the correct variable
 // later, we'll call this function using a different list of games
