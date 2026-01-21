@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  * Challenge 2: Review the provided code. The provided code includes:
  * -> Statements that import data from games.js
@@ -27,12 +28,19 @@ const gamesContainer = document.getElementById("games-container");
 
 // create a function that adds all data from the games array to the page
 function addGamesToPage(games) {
-    for (let x = 0; i < games; x++) {
-         const games = `<div class = "gamecard"> 
-         </div>`;
-         const apps = `The game's image looks like ${ get  }; This is the ${ pledged } amount and the goal is ${ description }`;
-
+    for (let x = 0; x < games.length; x++) {/*Microsoft Copilot*/
+        const recent_game=games[x];/*Microsoft Copilot*/
+        const new_games = `
+    <div class="game-card">
+    <img src="${recent_game.img}" class="game-img" />
+    <h3>The game's image looks like ${recent_game.img}</h3>
+    <p>This is the ${recent_game.pledged} amount</p>
+    </div>
+    `;
+        gamesContainer.innerHTML += new_games;/*Microsoft Copilot*/
     }}
+
+addGamesToPage(GAMES_JSON);
     // loop over each item in the data
 
 
@@ -66,20 +74,24 @@ function addGamesToPage(games) {
 const contributionsCard = document.getElementById("num-contributions");
 
 // use reduce() to count the number of total contributions by summing the backers
-
+const total_contributions = GAMES_JSON.reduce( (starting_point, recent_game) => 
+    {return starting_point + recent_game.backers;}, 0);
 
 // set the inner HTML using a template literal and toLocaleString to get a number with commas
-
+contributionsCard.innerHTML = total_contributions.toLocaleString('en-US');
 
 // grab the amount raised card, then use reduce() to find the total amount raised
 const raisedCard = document.getElementById("total-raised");
+const raisedCard_amount = GAMES_JSON.reduce( (new_starting_point, recent_game) => 
+     {return new_starting_point + recent_game.pledged;}, 0);
 
 // set inner HTML using template literal
-
+raisedCard.innerHTML = raisedCard_amount.toLocaleString('en-US')/*Microsoft Copilot*/
 
 // grab number of games card and set its inner HTML
-const gamesCard = document.getElementById("num-games");
-
+const gamesCard = document.getElementById("num-games");/*Microsoft Copilot*/
+const numberofgames = GAMES_JSON.length;/*Microsoft Copilot*/
+gamesCard.innerHTML = numberofgames.toLocaleString('en-US');/*Microsoft Copilot*/
 
 /*************************************************************************************
  * Challenge 5: Add functions to filter the funded and unfunded games
@@ -89,40 +101,43 @@ const gamesCard = document.getElementById("num-games");
 
 // show only games that do not yet have enough funding
 function filterUnfundedOnly() {
-    deleteChildElements(gamesContainer);
+    deleteChildElements(gamesContainer);/*Microsoft Copilot*/
 
     // use filter() to get a list of games that have not yet met their goal
-
-
-    // use the function we previously created to add the unfunded games to the DOM
-
+    const nogoalgames = GAMES_JSON.filter((recent_game) => recent_game.pledged < recent_game.goal);
+    console.log(nogoalgames);/*Microsoft Copilot*/
+    addGamesToPage(nogoalgames);/*Microsoft Copilot*/
 }
 
+    // use the function we previously created to add the unfunded games to the DOM
 // show only games that are fully funded
-function filterFundedOnly() {
+function filterFundedOnly() {/*Microsoft Copilot*/
     deleteChildElements(gamesContainer);
 
     // use filter() to get a list of games that have met or exceeded their goal
-
-
-    // use the function we previously created to add unfunded games to the DOM
-
+    const goalmetgames = GAMES_JSON.filter((recent_game) => recent_game.pledged >= recent_game.goal);/*Microsoft Copilot*/
+    console.log(goalmetgames);
+    addGamesToPage(goalmetgames);
 }
+    // use the function we previously created to add unfunded games to the DOM
 
 // show all games
 function showAllGames() {
-    deleteChildElements(gamesContainer);
-
+    deleteChildElements(gamesContainer);/*Microsoft Copilot*/
     // add all games from the JSON data to the DOM
-
+    addGamesToPage(GAMES_JSON);
 }
 
 // select each button in the "Our Games" section
-const unfundedBtn = document.getElementById("unfunded-btn");
-const fundedBtn = document.getElementById("funded-btn");
+const unfundedBtn = document.getElementById("unfunded-btn");/*Microsoft Copilot*/
+const fundedBtn = document.getElementById("funded-btn");/*Microsoft Copilot*/
 const allBtn = document.getElementById("all-btn");
 
 // add event listeners with the correct functions to each button
+unfundedBtn.addEventListener("click", filterUnfundedOnly);/*Microsoft Copilot*/
+fundedBtn.addEventListener('click', filterFundedOnly);/*Microsoft Copilot*/
+allBtn.addEventListener('click', showAllGames);/*Microsoft Copilot*/
+
 
 
 /*************************************************************************************
@@ -134,11 +149,19 @@ const allBtn = document.getElementById("all-btn");
 const descriptionContainer = document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
-
+const number_unfunded_games = GAMES_JSON.filter((game) => game.pledged < game.goal);/*Microsoft Copilot*/
+const totalnumberofgames = GAMES_JSON.length;
+full_number_unfunded = number_unfunded_games.length;
+full_number_funded = GAMES_JSON.reduce((startofthegame, game) => {return startofthegame + game.pledged;}, 0);
 
 // create a string that explains the number of unfunded games using the ternary operator
 
+const new_str = `The total amount of money raised is: ${full_number_funded}. This is for: ${totalnumberofgames}
+There are about ${full_number_unfunded ? full_number_unfunded: "None"}  games that remain unfunded`  /*Microsoft Copilot*/
 
+const newparagraph = document.createElement('div'); /*Microsoft Copilot*/
+newparagraph.textContent = new_str;
+descriptionContainer.appendChild(newparagraph) /*Microsoft Copilot*/
 // create a new DOM element containing the template string and append it to the description container
 
 /************************************************************************************
@@ -154,7 +177,13 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
 });
 
 // use destructuring and the spread operator to grab the first and second games
-
+const [firstGame, secondGame, ...rest] = sortedGames;
 // create a new element to hold the name of the top pledge game, then append it to the correct element
-
+firstGameContainer.appendChild(addGamesToPage(firstGame)); /*Microsoft Copilot*/
 // do the same for the runner up item
+secondGameContainer.appendChild(addGamesToPage(secondGame)); /*Microsoft Copilot*/
+
+/*AI Citations:
+Microsoft Copilot. Accessed 2026-1-20. Prompt: Please help me identify the errors in my index.js file. 
+Prompt #2: Please explain the errors and how to fix them in my js file. Prompt #3: Please explain why my code is incorrect, 
+code snippet */
